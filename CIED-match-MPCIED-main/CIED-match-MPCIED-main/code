@@ -1,0 +1,263 @@
+*工企库与环境库匹配
+*1、处理工企库和环境库的法人代码和企业名称
+
+*###处理环境库
+forvalue i = 1998/2014 {
+
+*法人代码
+use C:\污染数据库\hj`i'.dta ,clear
+drop if orga_code == ""
+duplicates drop orga_code,force
+
+save C:\污染数据库\hjorga`i'.dta,replace
+*企业名称
+use C:\污染数据库\hj`i'.dta ,clear
+drop if firm_name == ""
+replace firm_name = subinstr(firm_name, ">","",.)
+replace firm_name = subinstr(firm_name, "<","",.)
+replace firm_name = subinstr(firm_name, " ","",.)
+replace firm_name = subinstr(firm_name, "(","",.)
+replace firm_name = subinstr(firm_name, ")","",.)
+replace firm_name = subinstr(firm_name, "（","",.)
+replace firm_name = subinstr(firm_name, "）","",.)
+replace firm_name = subinstr(firm_name, "*","",.)
+replace firm_name = subinstr(firm_name, "！","",.)
+replace firm_name = subinstr(firm_name, "【","",.)
+replace firm_name = subinstr(firm_name, "】","",.)
+replace firm_name = subinstr(firm_name, "？","",.)
+replace firm_name = subinstr(firm_name, "/","",.)
+replace firm_name = subinstr(firm_name, "|","",.)
+replace firm_name = subinstr(firm_name, "-","",.)
+replace firm_name = subinstr(firm_name, "&","",.)
+replace firm_name = subinstr(firm_name, "^","",.)
+replace firm_name = subinstr(firm_name, "#","",.)
+replace firm_name = subinstr(firm_name, "@","",.)
+replace firm_name = subinstr(firm_name, ":","",.)
+replace firm_name = subinstr(firm_name, "：","",.)
+replace firm_name = subinstr(firm_name, "；","",.)
+replace firm_name = subinstr(firm_name, "{","",.)
+replace firm_name = subinstr(firm_name, "}","",.)
+replace firm_name = subinstr(firm_name, "[","",.)
+replace firm_name = subinstr(firm_name, "]","",.)
+replace firm_name = subinstr(firm_name, "~","",.)
+replace firm_name = subinstr(firm_name, "\","",.)
+replace firm_name = subinstr(firm_name, " ","",.)
+replace firm_name = subinstr(firm_name, "市","",.)
+replace firm_name = subinstr(firm_name, "县","",.)
+replace firm_name = subinstr(firm_name, "省","",.)
+replace firm_name = subinstr(firm_name, "乡","",.)
+replace firm_name = subinstr(firm_name, "村","",.)
+replace firm_name = subinstr(firm_name, "区","",.)
+replace firm_name = subinstr(firm_name, "自治","",.)
+replace firm_name = subinstr(firm_name, "\","",.)
+replace firm_name = subinstr(firm_name, "企业","",.)
+replace firm_name = subinstr(firm_name, "有限","",.)
+replace firm_name = subinstr(firm_name, "责任","",.)
+replace firm_name = subinstr(firm_name, "公司","",.)
+replace firm_name = subinstr(firm_name, "厂","",.)
+replace firm_name = subinstr(firm_name, "实业","",.)
+replace firm_name = subinstr(firm_name, "科技","",.)
+replace firm_name = subinstr(firm_name, "集团","",.)
+replace firm_name = subinstr(firm_name, "股份","",.)
+duplicates drop firm_name,force
+
+save C:\污染数据库\hjname`i'.dta,replace
+}
+
+
+*###处理工企库
+forvalue i = 1998/2014 {
+
+*法人代码
+use C:\中国工业企业数据库\gq`i'.dta ,clear
+drop if orga_code == ""
+duplicates drop orga_code,force
+
+save C:\中国工业企业数据库\gqorga`i'.dta,replace
+*企业名称
+use C:\中国工业企业数据库\gq`i'.dta ,clear
+drop if firm_name == ""
+replace firm_name = subinstr(firm_name, ">","",.)
+replace firm_name = subinstr(firm_name, "<","",.)
+replace firm_name = subinstr(firm_name, " ","",.)
+replace firm_name = subinstr(firm_name, "(","",.)
+replace firm_name = subinstr(firm_name, ")","",.)
+replace firm_name = subinstr(firm_name, "（","",.)
+replace firm_name = subinstr(firm_name, "）","",.)
+replace firm_name = subinstr(firm_name, "*","",.)
+replace firm_name = subinstr(firm_name, "！","",.)
+replace firm_name = subinstr(firm_name, "【","",.)
+replace firm_name = subinstr(firm_name, "】","",.)
+replace firm_name = subinstr(firm_name, "？","",.)
+replace firm_name = subinstr(firm_name, "/","",.)
+replace firm_name = subinstr(firm_name, "|","",.)
+replace firm_name = subinstr(firm_name, "-","",.)
+replace firm_name = subinstr(firm_name, "&","",.)
+replace firm_name = subinstr(firm_name, "^","",.)
+replace firm_name = subinstr(firm_name, "#","",.)
+replace firm_name = subinstr(firm_name, "@","",.)
+replace firm_name = subinstr(firm_name, ":","",.)
+replace firm_name = subinstr(firm_name, "：","",.)
+replace firm_name = subinstr(firm_name, "；","",.)
+replace firm_name = subinstr(firm_name, "{","",.)
+replace firm_name = subinstr(firm_name, "}","",.)
+replace firm_name = subinstr(firm_name, "[","",.)
+replace firm_name = subinstr(firm_name, "]","",.)
+replace firm_name = subinstr(firm_name, "~","",.)
+replace firm_name = subinstr(firm_name, "\","",.)
+replace firm_name = subinstr(firm_name, " ","",.)
+replace firm_name = subinstr(firm_name, "市","",.)
+replace firm_name = subinstr(firm_name, "县","",.)
+replace firm_name = subinstr(firm_name, "省","",.)
+replace firm_name = subinstr(firm_name, "乡","",.)
+replace firm_name = subinstr(firm_name, "村","",.)
+replace firm_name = subinstr(firm_name, "区","",.)
+replace firm_name = subinstr(firm_name, "自治","",.)
+replace firm_name = subinstr(firm_name, "\","",.)
+replace firm_name = subinstr(firm_name, "企业","",.)
+replace firm_name = subinstr(firm_name, "有限","",.)
+replace firm_name = subinstr(firm_name, "责任","",.)
+replace firm_name = subinstr(firm_name, "公司","",.)
+replace firm_name = subinstr(firm_name, "厂","",.)
+replace firm_name = subinstr(firm_name, "实业","",.)
+replace firm_name = subinstr(firm_name, "科技","",.)
+replace firm_name = subinstr(firm_name, "集团","",.)
+replace firm_name = subinstr(firm_name, "股份","",.)
+duplicates drop firm_name,force
+
+save C:\中国工业企业数据库\gqname`i'.dta,replace
+}
+
+
+
+*2、分年份匹配工企库和环境库
+*###按照法人代码匹配
+use C:\污染数据库\hjorga1998.dta,replace
+append using C:\污染数据库\hjorga1999.dta
+append using C:\污染数据库\hjorga2000.dta
+append using C:\污染数据库\hjorga2001.dta
+append using C:\污染数据库\hjorga2002.dta
+append using C:\污染数据库\hjorga2003.dta
+append using C:\污染数据库\hjorga2004.dta
+append using C:\污染数据库\hjorga2005.dta
+append using C:\污染数据库\hjorga2006.dta
+append using C:\污染数据库\hjorga2007.dta
+append using C:\污染数据库\hjorga2008.dta
+append using C:\污染数据库\hjorga2009.dta
+append using C:\污染数据库\hjorga2010.dta
+append using C:\污染数据库\hjorga2011.dta
+append using C:\污染数据库\hjorga2012.dta
+append using C:\污染数据库\hjorga2013.dta
+append using C:\污染数据库\hjorga2014.dta
+save C:\污染数据库\hjorga1998-2014.dta,replace
+
+
+use C:\中国工业企业数据库\gqorga1998.dta,replace
+append using C:\中国工业企业数据库\gqorga1999.dta
+append using C:\中国工业企业数据库\gqorga2000.dta
+append using C:\中国工业企业数据库\gqorga2001.dta
+append using C:\中国工业企业数据库\gqorga2002.dta
+append using C:\中国工业企业数据库\gqorga2003.dta
+append using C:\中国工业企业数据库\gqorga2004.dta
+append using C:\中国工业企业数据库\gqorga2005.dta
+append using C:\中国工业企业数据库\gqorga2006.dta
+append using C:\中国工业企业数据库\gqorga2007.dta
+append using C:\中国工业企业数据库\gqorga2008.dta
+append using C:\中国工业企业数据库\gqorga2009.dta
+append using C:\中国工业企业数据库\gqorga2010.dta
+append using C:\中国工业企业数据库\gqorga2011.dta
+append using C:\中国工业企业数据库\gqorga2012.dta
+append using C:\中国工业企业数据库\gqorga2013.dta
+append using C:\中国工业企业数据库\gqorga2014.dta
+save C:\中国工业企业数据库\gqorga1998-2014.dta,replace
+
+***
+use C:\污染数据库\hjorga1998-2014.dta,replace
+duplicates drop orga_code year ,force
+merge 1:1 orga_code year using C:\中国工业企业数据库\gqorga1998-2014.dta
+
+
+
+
+*###按照企业名称匹配
+use C:\污染数据库\hjname1998.dta,replace
+append using C:\污染数据库\hjname1999.dta
+append using C:\污染数据库\hjname2000.dta
+append using C:\污染数据库\hjname2001.dta
+append using C:\污染数据库\hjname2002.dta
+append using C:\污染数据库\hjname2003.dta
+append using C:\污染数据库\hjname2004.dta
+append using C:\污染数据库\hjname2005.dta
+append using C:\污染数据库\hjname2006.dta
+append using C:\污染数据库\hjname2007.dta
+append using C:\污染数据库\hjname2008.dta
+append using C:\污染数据库\hjname2009.dta
+append using C:\污染数据库\hjname2010.dta
+append using C:\污染数据库\hjname2011.dta
+append using C:\污染数据库\hjname2012.dta
+append using C:\污染数据库\hjname2013.dta
+append using C:\污染数据库\hjname2014.dta
+save C:\污染数据库\hjname1998-2014.dta,replace
+
+
+
+use C:\中国工业企业数据库\gqname1998.dta,replace
+append using C:\中国工业企业数据库\gqname1999.dta, force
+append using C:\中国工业企业数据库\gqname2000.dta, force
+append using C:\中国工业企业数据库\gqname2001.dta, force
+append using C:\中国工业企业数据库\gqname2002.dta, force
+append using C:\中国工业企业数据库\gqname2003.dta, force
+append using C:\中国工业企业数据库\gqname2004.dta, force
+append using C:\中国工业企业数据库\gqname2005.dta, force
+append using C:\中国工业企业数据库\gqname2006.dta, force
+append using C:\中国工业企业数据库\gqname2007.dta, force
+append using C:\中国工业企业数据库\gqname2008.dta, force
+append using C:\中国工业企业数据库\gqname2009.dta, force
+append using C:\中国工业企业数据库\gqname2010.dta, force
+append using C:\中国工业企业数据库\gqname2011.dta, force
+append using C:\中国工业企业数据库\gqname2012.dta, force
+append using C:\中国工业企业数据库\gqname2013.dta, force
+append using C:\中国工业企业数据库\gqname2014.dta, force
+save C:\中国工业企业数据库\gqname1998-2014.dta,replace
+
+
+
+***
+use C:\污染数据库\hjname1998-2014.dta,replace
+duplicates drop firm_name year ,force
+drop _merge
+
+
+
+**合二为一
+use  C:\污染数据库\matched-orga1998-2014.dta ,clear
+append using C:\污染数据库\matched-name1998-2014.dta 
+duplicates drop year firm_code,force
+tab year
+
+
+
+***把1998-2010年的部分以千克为单位的变量转化为以吨为单位的变量，以此与2011-2014相匹配
+use "C:\工企库污染库匹配数据\1998-2014工企库和污染库匹配数据.dta",clear
+destring,replace
+destring pfNHNdischarge , replace force
+replace pfNHNtreat = pfNHNtreat / 1000 if year < 2011
+replace pfOtreat = pfOtreat / 1000 if year < 2011
+replace pfOdischarge = pfOdischarge / 1000 if year < 2011
+replace pfNHNdischarge = pfNHNdischarge / 1000 if year < 2011
+replace pfsmoketreat = pfsmoketreat / 1000 if year < 2011
+replace pfsmokedischarge = pfsmokedischarge / 1000 if year < 2011
+replace pfdusttreat = pfdusttreat / 1000 if year < 2011
+replace pfdustdischarge = pfdustdischarge / 1000 if year < 2011
+
+
+
+
+
+
+
+
+
+
+
+
