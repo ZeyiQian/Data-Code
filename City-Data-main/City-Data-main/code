@@ -1,0 +1,169 @@
+***区分城市等级7级
+gen citylevel=.
+replace citylevel=7 if population>=1000
+replace citylevel=6 if population<1000 & population>=500
+replace citylevel=5 if population<500 & population>=300
+replace citylevel=4 if population<300 & population>=100
+replace citylevel=3 if population<100 & population>=50
+replace citylevel=2 if population<50 & population>=20
+replace citylevel=1 if population<20
+
+
+*merge 新创企业
+sort y_n
+merge y_n using "C:\Users\qqq\Desktop\新创企业总数.dta"
+drop if _merge==2
+drop _merge
+
+sort y_n
+merge y_n using "C:\Users\qqq\Desktop\股份有限新创.dta"
+drop if _merge==2
+drop _merge
+
+sort y_n
+merge y_n using "C:\Users\qqq\Desktop\有限责任新创.dta"
+drop if _merge==2
+drop _merge
+
+sort y_n
+merge y_n using "C:\Users\qqq\Desktop\一人有限责任.dta"
+drop if _merge==2
+drop _merge
+
+sort y_n
+merge y_n using "C:\Users\qqq\Desktop\外资.dta"
+drop if _merge==2
+drop _merge
+
+sort y_n
+merge y_n using "C:\Users\qqq\Desktop\外资除了港澳台.dta"
+drop if _merge==2
+drop _merge
+sort y_n
+
+sort y_n
+merge y_n using "C:\Users\qqq\Desktop\外资机构.dta"
+drop if _merge==2
+drop _merge
+
+sort y_n
+merge y_n using "C:\Users\qqq\Desktop\内资.dta"
+drop if _merge==2
+drop _merge
+
+sort y_n
+merge y_n using "C:\Users\qqq\Desktop\集体.dta"
+drop if _merge==2
+drop _merge
+
+sort y_n
+merge y_n using "C:\Users\qqq\Desktop\国企.dta"
+drop if _merge==2
+drop _merge
+
+
+label variable sumCreate "新创企业总数"
+label variable GFYXCreate "新创股份有限"
+label variable YXZRCreate "新创有限责任"
+label variable YRYXZRCreate "新创一人有限责任"
+label variable WZCreate "新创外资"
+label variable WZNoGATCreate "新创外资除港澳台"
+label variable WZJGCreate "新创外资机构"
+label variable NZCreate "新创内资"
+label variable JTCreate "新创集体制"
+label variable GQCreate "新创国有"
+
+replace sumCreate=0 if sumCreate==.
+replace GFYXCreate=0 if GFYXCreate==.
+replace YXZRCreate=0 if YXZRCreate==.
+replace YRYXZRCreate=0 if YRYXZRCreate==.
+replace WZCreate=0 if WZCreate==.
+replace WZNoGATCreate=0 if WZNoGATCreate==.
+replace WZJGCreate=0 if WZJGCreate==.
+replace NZCreate=0 if NZCreate==.
+replace JTCreate=0 if JTCreate==.
+replace GQCreate=0 if GQCreate==.
+
+
+
+
+**插值人口密度、财政收入、支出、科学支出、教育支出、储蓄、宽带、道路、移动电话、创新、市场化指数、环境规制
+destring year,replace
+
+gen density1=log(density)
+ipolate density1 population,gen(xxlndensity1)
+gen xXxdensity=exp(xxlndensity1)
+drop density1
+drop xxlndensity1
+
+gen FiscalRevenue1=log(FiscalRevenue)
+ipolate FiscalRevenue1 GDP,gen(xxFiscalRevenue1)
+gen xXxFiscalRevenue=exp(xxFiscalRevenue1)
+drop FiscalRevenue1
+drop xxFiscalRevenue1
+
+
+gen FiscalSpending1=log(FiscalSpending)
+ipolate FiscalSpending1 GDP,gen(xxFiscalSpending1)
+gen xXxFiscalSpending=exp(xxFiscalSpending1)
+drop FiscalSpending1
+drop xxFiscalSpending1
+
+
+
+gen Sci1=log(Sci)
+ipolate Sci1 xXxFiscalSpending,gen(xxSci1)
+gen xXxSci=exp(xxSci1)
+drop Sci1
+drop xxSci1
+
+gen Edu1=log(Edu)
+ipolate Edu1 xXxFiscalSpending,gen(xxEdu1)
+gen xXxEdu=exp(xxEdu1)
+drop Edu1
+drop xxEdu1
+
+
+gen Save1=log(Save)
+ipolate Save1 AWage,gen(xxSave1)
+gen xXxSave=exp(xxSave1)
+drop Save1
+drop xxSave1
+
+gen Network1=log(Network)
+ipolate Network1 GDP,gen(xxNetwork1)
+gen xXxNetwork=exp(xxNetwork1)
+drop Network1
+drop xxNetwork1
+
+gen Road1=log(Road)
+ipolate Road1 GDP,gen(xxRoad1)
+gen xXxRoad=exp(xxRoad1)
+drop Road1
+drop xxRoad1
+
+gen Phone1=log(Phone)
+ipolate Phone1 GDP,gen(xxPhone1)
+gen xXxPhone=exp(xxPhone1)
+drop Phone1
+drop xxPhone1
+
+gen innovation1=log(innovation)
+ipolate innovation1 GDP,gen(xxinnovation1)
+gen xXxinnovation=exp(xxinnovation1)
+drop innovation1
+drop xxinnovation1
+
+
+gen Marketing1=log(Marketing)
+ipolate Marketing1 GDP,gen(xxMarketing1)
+gen xXxMarketing=exp(xxMarketing1)
+drop Marketing1
+drop xxMarketing1
+
+gen ppv1=log(ppv)
+ipolate ppv1 GDP,gen(xxppv1)
+gen xXxppv=exp(xxppv1)
+drop ppv1
+drop xxppv1
+

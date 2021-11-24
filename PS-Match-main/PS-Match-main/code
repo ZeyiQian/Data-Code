@@ -1,0 +1,26 @@
+
+bysort TREAT: sum AGE EDUC NODEGREE BLACK HISP MARR U74 U75 ///
+RE74 RE75 RE78 TREAT
+
+global breps 200  ///
+
+global X AGE AGESQ EDUC EDUCSQ MARR NODEGREE BLACK /// 
+HISP RE74 RE75 RE74SQ U74 U75 U74HISP
+
+pscore TREAT $X, pscore(myscore) comsup blockid(myblock) ///  
+numblo(5) level(0.005) logit
+
+atts RE78 TREAT, pscore(myscore) blockid(myblock) comsup bootreps($breps) dots
+
+
+
+
+twoway(kdensity   myscore if TREAT==1, legend(label(1 "Treat"))) ///
+(kdensity  myscore if TREAT==0, legend(label(2 "Control"))) , ///
+ xtitle("Pscore") title("Before Matching")
+
+
+twoway(kdensity  myscore if TREAT==1 , legend(label(1 "Treat"))) ///       
+(kdensity  myscore if myblock!=. , legend(label(2 "Control"))) , ///
+ xtitle("Pscore") title("After Matching")
+
