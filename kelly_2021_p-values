@@ -1,0 +1,73 @@
+## install packages
+
+  install.packages("haven")
+  install.packages("dplyr")
+  install.packages("spdep")
+  install.packages("estimatr")
+  install.packages("fields")
+  install.packages("foreign")
+  install.packages("tidyverse")
+
+
+## load packages
+
+  library(haven)
+  library(dplyr)
+  library(spdep)
+  library(estimatr)
+  library(fields)
+  library(foreign)
+  library(tidyverse)
+
+
+## set working directory containing R file and data
+
+  setwd("C:/1_Clark University/course/Micro Development/HW3/h3R")
+
+
+## set R file with Kelly randomization code (if you need weights, R file must be modified to include them!)
+
+  
+  source('randomize.R')
+  
+
+## define dataset as global study
+
+  study <- read_stata("hw3.dta")
+
+
+## 1. define specification WITHOUT X (lat) AND Y (lon)
+
+  frml= "lhhequiv  ~ pothuan_mita +dbnd_sh +dbnd_sh2 +dbnd_sh3 +infants +children +adults +elv_sh +slope +bfe4_1 +bfe4_2 +bfe4_3"
+
+
+## execute randomization (likely that values in Range_Search function need adjustment)
+  
+  x_rand=x_randomize(study,frm=frml,var_num=1,Range_Search=seq(400,1000,by=10),kappa=0.5,nSim=2000)
+  
+  
+## print coefficient, original p-value, exact p-value
+  
+  print(x_rand$Output$coefficient)
+  print(x_rand$Output$p_orig)
+  print(x_rand$Output$p_exact)
+  
+  
+## 2. define specification WITH X (lat) AND Y (lon)
+  
+  frml = "[dep var] ~ [indep var] + [indep var] + ... + X + Y "
+  
+  
+## execute randomization (likely that values in Range_Search function need adjustment)
+  
+  x_rand=x_randomize(study,
+                     frm=frml,
+                     Range_Search=seq(400,1000,by=10),
+                     kappa=0.5,
+                     nSim=10000)
+  
+## print coefficient, original p-value, exact p-value
+  
+  print(x_rand$Output$coefficient)
+  print(x_rand$Output$p_orig)
+  print(x_rand$Output$p_exact)
